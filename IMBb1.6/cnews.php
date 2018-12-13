@@ -11,6 +11,28 @@
       $user = $results;
     }
   }
+  $titulo="";
+  $tiempo="";
+  $autor="";
+  $url="";
+  $info="";
+  $sitio="";
+  $img="";
+
+  $records = $conn->prepare('SELECT titulo,tiempo, autor, url, info, sitio, img FROM noticias WHERE tiempo=(SELECT MAX(tiempo)from noticias)');
+  
+  $records->execute();
+  $results = $records->fetch(PDO::FETCH_ASSOC);
+  $titulo = $results['titulo'];
+  $tiempo = $results['tiempo'];
+  $autor = $results['autor'];
+  $url = $results['url'];
+  $info = $results['info'];
+  $img = $results['img'];
+  $sitio = $results['sitio'];
+  $re= "imagenes/imagen";
+
+
 ?>
 
 <html>
@@ -34,26 +56,20 @@ margin: 0 auto;
 		background-color:#E7E6E4;">
 
 <tr>
-<td><a name="1" href="https://people.com/tv/vanessa-hudgens-princess-switch-parent-trap/">Vanessa Hudgens Loves That The Princess Switch Has Parent Trap Vibes: 'It's a Go-to of Mine'</a> </td>
+<td><a name="1" href=<?php echo $url?>><?php echo $titulo?></a> </td>
 </tr>
 
 <tr>
-<td name="2">14 hours ago | by Dana Rose Falcone | <a href="https://people.com">PEOPLE.com</a></td>
+<td name="2"><?php echo $tiempo?> | by <?php echo $autor?> | <a href=<?php echo $url?>> <?php echo $sitio?></a></td>
 </tr>
 <tr>
 <td>
-<img name="a" style="float: left;" src="imagenes/imagen5.jpg" />When the trailer dropped for Netflix’s The Princess Switch, in which Vanessa Hudgens plays both a Chicago baker and a European duchess, fans couldn’t help but draw Parent Trap comparisons.
-
-And Hudgens, 29, is flattered by the likeness.
-
-“I’ve seen that movie so many times,” she tells People. “My sister and I used to act out the scenes from the movie. It’s still such a go-to of mine. If I still love it, hopefully, this will be a classic for my fans and that they’ll still watch it.”
-
-Just like The Parent Trap, The Princess Switch boasts long-lost lookalikes,</td>
+<img name="a" style="float: left;" src="<?php echo $re . $img?>.jpg" /><?php echo utf8_encode( $info)?></td>
 </tr>
 
 <tr>
 	<td>
-		<a href="https://people.com/tv/vanessa-hudgens-princess-switch-parent-trap/"> See full article at PEOPLE.com »</a>
+		<a href="<?php echo $url?>"> See full article at <?php echo $sitio?>»</a>
 	</td>
 </tr>
 </table>
